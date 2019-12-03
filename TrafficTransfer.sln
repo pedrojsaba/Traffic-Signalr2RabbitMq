@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic.SignalREndpoint", "Traffic.SignalREndpoint\Traffic.SignalREndpoint.csproj", "{EA76DD3C-65B1-4215-8E74-2B580A600503}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B} = {9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Messages", "Transactions.Messages\Transactions.Messages.csproj", "{73B3DA7C-D705-4D92-BE22-75D919DAC784}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic.Application", "Traffic.Application\Traffic.Application.csproj", "{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA76DD3C-65B1-4215-8E74-2B580A600503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA76DD3C-65B1-4215-8E74-2B580A600503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA76DD3C-65B1-4215-8E74-2B580A600503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA76DD3C-65B1-4215-8E74-2B580A600503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73B3DA7C-D705-4D92-BE22-75D919DAC784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B3DA7C-D705-4D92-BE22-75D919DAC784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B3DA7C-D705-4D92-BE22-75D919DAC784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B3DA7C-D705-4D92-BE22-75D919DAC784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3B3A535-AB59-476A-9A37-D7A9886906C5}
+	EndGlobalSection
+EndGlobal
