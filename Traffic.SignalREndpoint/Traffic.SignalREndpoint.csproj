@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -11,10 +11,14 @@
     <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.1" />
     <PackageReference Include="MySql.Data" Version="8.0.18" />
+    <PackageReference Include="NServiceBus.NHibernate" Version="8.2.0" />
+    <PackageReference Include="NServiceBus.RabbitMQ" Version="5.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Traffic.Application\Traffic.Application.csproj" />
+    <ProjectReference Include="..\Traffic.Infrastructure\Traffic.Infrastructure.csproj" />
+    <ProjectReference Include="..\UpgFisi.Common\UpgFisi.Common.csproj" />
   </ItemGroup>
 
 </Project>

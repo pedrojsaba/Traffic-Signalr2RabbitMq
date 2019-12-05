@@ -3,14 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic.SignalREndpoint", "Traffic.SignalREndpoint\Traffic.SignalREndpoint.csproj", "{EA76DD3C-65B1-4215-8E74-2B580A600503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traffic.SignalREndpoint", "Traffic.SignalREndpoint\Traffic.SignalREndpoint.csproj", "{EA76DD3C-65B1-4215-8E74-2B580A600503}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B} = {9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transactions.Messages", "Transactions.Messages\Transactions.Messages.csproj", "{73B3DA7C-D705-4D92-BE22-75D919DAC784}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transactions.Messages", "Transactions.Messages\Transactions.Messages.csproj", "{73B3DA7C-D705-4D92-BE22-75D919DAC784}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic.Application", "Traffic.Application\Traffic.Application.csproj", "{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Traffic.Application", "Traffic.Application\Traffic.Application.csproj", "{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic.Infrastructure", "Traffic.Infrastructure\Traffic.Infrastructure.csproj", "{10244829-6F7A-44CB-85D1-8CEC87674840}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traffic.Domain", "Traffic.Domain\Traffic.Domain.csproj", "{8D7ABA64-C0D0-4AE0-89DD-1E6DDD453EA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpgFisi.Common", "UpgFisi.Common\UpgFisi.Common.csproj", "{C7D3EB2B-264F-4BA7-855F-04B995825BE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +36,18 @@ Global
 		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B53D91E-91F2-45E2-B2DD-FEFB2C50940B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10244829-6F7A-44CB-85D1-8CEC87674840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10244829-6F7A-44CB-85D1-8CEC87674840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10244829-6F7A-44CB-85D1-8CEC87674840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10244829-6F7A-44CB-85D1-8CEC87674840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D7ABA64-C0D0-4AE0-89DD-1E6DDD453EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D7ABA64-C0D0-4AE0-89DD-1E6DDD453EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D7ABA64-C0D0-4AE0-89DD-1E6DDD453EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D7ABA64-C0D0-4AE0-89DD-1E6DDD453EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7D3EB2B-264F-4BA7-855F-04B995825BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7D3EB2B-264F-4BA7-855F-04B995825BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7D3EB2B-264F-4BA7-855F-04B995825BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7D3EB2B-264F-4BA7-855F-04B995825BE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

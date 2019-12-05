@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>Efrain Bautista</Authors>
+    <Company>UPG FISI</Company>
+    <Product>UpgFisi Common</Product>
+    <Copyright>2019</Copyright>
+    <PackageProjectUrl>https://github.com//UNMSM-UPG-FISI</PackageProjectUrl>
+    <Version>1.0.2</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentNHibernate" Version="2.1.2" />
+    <PackageReference Include="NHibernate" Version="5.2.6" />
+  </ItemGroup>
+
+</Project>
