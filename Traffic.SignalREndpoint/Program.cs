@@ -59,17 +59,19 @@ namespace Traffic.SignalREndpoint
             endpointConfiguration.EnableInstallers();
             endpointConfiguration.AuditProcessedMessagesTo("audit");
             var endpointInstance = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
-            Console.WriteLine("Press Enter to exit.");
-            Console.ReadLine();
-            await endpointInstance.Stop().ConfigureAwait(false);
 
+            _trafficApplicationService = new TrafficApplicationService(endpointInstance);
             var hubConnection = new HubConnection(Environment.GetEnvironmentVariable("SIGNALR_URL_TRAFFIC"));
             IHubProxy hubProxy = hubConnection.CreateHubProxy("performanceHub");
-            hubProxy.On<Move>("getMonitorInsert", move => Task.Run(() => StdOut(move)));
+            hubProxy.On<Move>("getMonitorInsert", move => Task.Run(() => StdOut(move)).ConfigureAwait(false));
             await hubConnection.Start();
             Console.WriteLine("Press any key exit.");
             Console.ReadKey();
+
+            await endpointInstance.Stop()
+                .ConfigureAwait(false);           
         }
+
         static Configuration AddFluentMappings(Configuration nhConfiguration, string connectionString)
         {
             return Fluently
