@@ -19,9 +19,9 @@ namespace Traffic.Application
         {
             try
             {
-                var trafficId = Guid.NewGuid().ToString();
+                //var trafficId = Guid.NewGuid().ToString();
                 var command = new RequestTrafficTransferCommand(
-                    trafficId,
+                    dto.TrafficId,
                     dto.Register,
                     dto.Plate,
                     dto.Speed,
