@@ -1,6 +1,6 @@
 ﻿using NServiceBus;
 
-namespace Transactions.Messages.Events
+namespace Traffic.Messages.Events
 {
     public class TrafficTransferCompletedEvent : IEvent
     {

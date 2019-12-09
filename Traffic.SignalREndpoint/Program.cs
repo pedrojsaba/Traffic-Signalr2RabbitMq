@@ -1,66 +1,24 @@
-﻿using FluentMigrator.Runner;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using FluentNHibernate.Conventions.AcceptanceCriteria;
-using FluentNHibernate.Conventions.Helpers;
-using Microsoft.AspNet.SignalR.Client;
-using Microsoft.Extensions.DependencyInjection;
-using NHibernate.Cfg;
-using NServiceBus;
-using NServiceBus.NHibernate.Outbox;
-using NServiceBus.Persistence;
+﻿using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
-using Traffic.Application;
 using Traffic.Application.Dtos;
-using Traffic.Infrastructure.Mappings;
-using Traffic.Infrastructure.Migrations.MySQL;
-using UpgFisi.Common.Infrastructure.NHibernate;
 using Environment = System.Environment;
-using NHEnvironment = NHibernate.Cfg.Environment;
 
 namespace Traffic.SignalREndpoint
 {
     class Program
     {
 
-        private static ITrafficApplicationService _trafficApplicationService;      
-
+        
         static async Task Main()
         {
-            var serviceProvider = CreateServices();
-            using (var scope = serviceProvider.CreateScope())
-            {
-                UpdateDatabase(scope.ServiceProvider);
-            }
-            var endPointName = "Traffic.NSBEndpoint";
-            Console.Title = endPointName;
-            var endpointConfiguration = new EndpointConfiguration(endPointName);
-            var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
-            transport.UseConventionalRoutingTopology();
-            string rabbitmqUrl = Environment.GetEnvironmentVariable("RABBITMQ_TFC_NSB_URL");
-            transport.ConnectionString(rabbitmqUrl);
-            string mysqlConnectionString = Environment.GetEnvironmentVariable("MYSQL_STRCON_CORE_TRAFFICS");
-            var persistence = endpointConfiguration.UsePersistence<NHibernatePersistence>();
-            persistence.UseOutboxRecord<Outbox, OutboxMap>();
-            var nHibernateConfig = new Configuration();
-            nHibernateConfig.SetProperty(NHEnvironment.ConnectionProvider, typeof(NHibernate.Connection.DriverConnectionProvider).FullName);
-            nHibernateConfig.SetProperty(NHEnvironment.ConnectionDriver, typeof(NHibernate.Driver.MySqlDataDriver).FullName);
-            nHibernateConfig.SetProperty(NHEnvironment.Dialect, typeof(NHibernate.Dialect.MySQLDialect).FullName);
-            nHibernateConfig.SetProperty(NHEnvironment.ConnectionString, mysqlConnectionString);
-            AddFluentMappings(nHibernateConfig, mysqlConnectionString);
-            persistence.UseConfiguration(nHibernateConfig);
-            persistence.DisableSchemaUpdate();
-            endpointConfiguration.EnableOutbox();
-            endpointConfiguration.EnableInstallers();
-            endpointConfiguration.AuditProcessedMessagesTo("audit");
-            var endpointInstance = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
-
-            _trafficApplicationService = new TrafficApplicationService(endpointInstance);
             var hubConnection = new HubConnection(Environment.GetEnvironmentVariable("SIGNALR_URL_TRAFFIC"));
             IHubProxy hubProxy = hubConnection.CreateHubProxy("performanceHub");
             hubProxy.On<Move>("getMonitorInsert", move => Task.Run(() => StdOut(move)).ConfigureAwait(false));
@@ -68,25 +26,6 @@ namespace Traffic.SignalREndpoint
             Console.WriteLine("Press any key exit.");
             Console.ReadKey();
 
-            await endpointInstance.Stop()
-                .ConfigureAwait(false);           
-        }
-
-        static Configuration AddFluentMappings(Configuration nhConfiguration, string connectionString)
-        {
-            return Fluently
-                .Configure(nhConfiguration)
-                .Database(MySQLConfiguration.Standard.ConnectionString(connectionString))
-                .Mappings(cfg =>
-                {
-                    cfg.FluentMappings.AddFromAssembly(typeof(TrafficMap).Assembly);
-                    cfg.FluentMappings.Conventions.Add(
-                        ForeignKey.EndsWith("_id"),
-                        ConventionBuilder.Property.When(criteria => criteria.Expect(x => x.Nullable, Is.Not.Set), x => x.Not.Nullable()));
-                    cfg.FluentMappings.Conventions.Add<OtherConversions>();
-                    cfg.FluentMappings.Conventions.Add<TableNameConvention>();
-                })
-                .BuildConfiguration();
         }
         static void StdOut(Move move)
         {
@@ -106,27 +45,6 @@ namespace Traffic.SignalREndpoint
                 }
             }
         }
-        private static IServiceProvider CreateServices()
-        {
-            //"Server=localhost;Database=TrafficsSignalR;Uid=root;";
-            string connectionString = Environment.GetEnvironmentVariable("MYSQL_STRCON_CORE_TRAFFICS");
-            return new ServiceCollection()
-                .AddFluentMigratorCore()
-                .ConfigureRunner(rb => rb
-                    .WithGlobalCommandTimeout(new TimeSpan(1, 0, 0))
-                    .AddMySql5()
-                    .WithGlobalConnectionString(connectionString)
-                    .ScanIn(typeof(CreateInitialSchema).Assembly)
-                    .For.All()
-                )
-                .AddLogging(lb => lb.AddFluentMigratorConsole())
-                .BuildServiceProvider(false);
-        }
-        private static void UpdateDatabase(IServiceProvider serviceProvider)
-        {
-            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
-            runner.MigrateUp();
-        }
         static async void UploadData(Move move)
         {
             var dto = new PerformTrafficTransferRequestDto() {
@@ -136,7 +54,38 @@ namespace Traffic.SignalREndpoint
                 SourceId = move.PorticoId,
                 Photo = move.Foto1
             };
-            PerformTrafficTransferResponseDto response = await _trafficApplicationService.PerformTransfer(dto);
+            using (var httpClient = new HttpClient())
+            {
+                var url = "https://localhost:44393/traffic";
+                var myContent = CreateHttpContent(dto);
+
+                var result = await httpClient.PostAsync(url, myContent);
+            }
+        }
+        private static HttpContent CreateHttpContent(object content)
+        {
+            HttpContent httpContent = null;
+
+            if (content != null)
+            {
+                var ms = new MemoryStream();
+                SerializeJsonIntoStream(content, ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                httpContent = new StreamContent(ms);
+                httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            }
+
+            return httpContent;
+        }
+        public static void SerializeJsonIntoStream(object value, Stream stream)
+        {
+            using (var sw = new StreamWriter(stream, new UTF8Encoding(false), 1024, true))
+            using (var jtw = new JsonTextWriter(sw) { Formatting = Newtonsoft.Json.Formatting.None })
+            {
+                var js = new Newtonsoft.Json.JsonSerializer();
+                js.Serialize(jtw, value);
+                jtw.Flush();
+            }
         }
         static void ObtenerToken()
         {

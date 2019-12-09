@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Traffic.Application\Traffic.Application.csproj" />
+    <ProjectReference Include="..\Transactions.Messages\Traffic.Messages.csproj" />
   </ItemGroup>
 
 </Project>

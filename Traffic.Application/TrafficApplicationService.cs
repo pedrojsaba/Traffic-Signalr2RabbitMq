@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Traffic.Application.Dtos;
-using Transactions.Messages.Commands;
+using Traffic.Messages.Commands;
 
 namespace Traffic.Application
 {

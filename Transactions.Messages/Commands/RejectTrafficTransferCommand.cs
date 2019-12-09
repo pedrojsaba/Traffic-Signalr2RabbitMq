@@ -1,6 +1,6 @@
 ﻿using NServiceBus;
 
-namespace Transactions.Messages.Commands
+namespace Traffic.Messages.Commands
 {
     public class RejectTrafficTransferCommand : ICommand
     {

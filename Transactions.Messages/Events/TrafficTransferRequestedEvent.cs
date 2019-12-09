@@ -1,7 +1,7 @@
 ﻿using NServiceBus;
 using System;
 
-namespace Transactions.Messages.Events
+namespace Traffic.Messages.Events
 {
     public class TrafficTransferRequestedEvent : IEvent
     {

@@ -1,7 +1,7 @@
 ﻿using NServiceBus;
 using System;
 
-namespace Transactions.Messages.Commands
+namespace Traffic.Messages.Commands
 {
     public class RequestTrafficTransferCommand: ICommand
     {

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NServiceBus;
 using Traffic.Application;
-using Transactions.Messages.Commands;
+using Traffic.Messages.Commands;
 
 namespace Traffic.API
 {
@@ -55,12 +55,10 @@ namespace Traffic.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
-            app.UseRouting();
-
+            app.UseRouting();     
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
